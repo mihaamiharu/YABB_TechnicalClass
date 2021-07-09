@@ -1,7 +1,6 @@
 require_relative 'person'
 
 class Villain < Person
-    attr_reader :name
     def initialize(name, hitpoint, attack_damage)
         super(name, hitpoint, attack_damage)
         @flee_percentage = 0.5
@@ -23,7 +22,4 @@ class Villain < Person
     def flee?
         @fled
     end
-
-    
-    
 end

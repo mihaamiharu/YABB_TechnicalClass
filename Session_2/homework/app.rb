@@ -1,9 +1,11 @@
 require_relative 'hero'
-require_relative 'mongol_soldier'
+require_relative 'mongol_archer'
+require_relative 'mongol_spearman'
+require_relative 'mongol_swordsman'
 require_relative 'person'
 require_relative 'villain'
 
-
+#Add 1 new var for can controlled or not
 jin = Hero.new("Jin Sakai", 100, 50, true)
 yuna = Hero.new("Yuna", 90, 45, false)
 ishikawa = Hero.new("Sensei Ishikawa", 80, 60, false)
@@ -11,7 +13,7 @@ ishikawa = Hero.new("Sensei Ishikawa", 80, 60, false)
 
 mongol_archer = MongolArcher.new("Mongol Archer", 80, 40)
 mongol_spearman = MongolSpearman.new("Mongol Spearman", 120, 60)
-mongol_swordsman = MongolSwordman.new("Mongol Swordman", 100, 50)
+mongol_swordsman = MongolSwordsman.new("Mongol Swordsman", 100, 50)
 
 allies = [jin, yuna, ishikawa]
 villains = [mongol_archer, mongol_spearman, mongol_swordsman]
@@ -46,10 +48,6 @@ until (jin.die? || villains.empty?) do
             villains.delete(villain) if villain.die? || villain.flee?
         end
     end
-
-    
-
-
     puts "\n"
 
     villains.each do |villain|

@@ -1,6 +1,6 @@
 require_relative 'person'
 
-class Hero  < Person
+class Hero < Person
     attr_reader :controlled_character
 
     def initialize(name, hitpoint, attack_damage, controlled_character)
@@ -56,12 +56,12 @@ class Hero  < Person
     def jin_heal(allies)
         puts "Which ally you want to heal?"
         allies.each_with_index do |allies, index|
-            puts "#{index}. #{ally.name}"
+            puts "#{index}. #{allies.name}" if allies != self
         end
 
         jin_choose = gets.to_i
         if jin_choose <= allies.size 
-            heal_ally(allies[jin_choose])
+            heals(allies[jin_choose])
         else
             puts "Enter only 1 or 2"
             #If user input not 1 or 2, let user choices again 
@@ -70,11 +70,12 @@ class Hero  < Person
     end
 
     def heal
-        @hitpoint += @heal_point
+        @hitpoint += @heal_amount
+        
     end
 
     def heals (other_player)
-        puts "#{@name} heals #{@other_player}, restoring #{@heal_point} hitpoints"
+        puts "#{@name} heals #{@other_player}, restoring #{@heal_amount} hitpoints"
         other_player.heal
     end
 
