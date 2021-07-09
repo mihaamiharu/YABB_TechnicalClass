@@ -9,7 +9,7 @@ puts khotun
 puts "\n"
 
 loop do
-	jin.atack(khotun)
+	jin.attack(khotun)
 	puts khotun
 	puts "\n"
 	break if khotun.die?
