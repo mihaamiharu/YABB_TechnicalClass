@@ -1,0 +1,43 @@
+<style>
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+body {
+        padding-top: 50px;
+        padding-right: 30px;
+        padding-bottom: 50px;
+        padding-left: 80px;
+}
+</style>
+
+<body>
+    <h1>Create Item</h1>
+    <form action="/items/create" method="POST">
+        <label>Name</label>
+        <br>
+        <input type="text" name="name" placeholder="Item name" required>
+        <br>
+        <br>
+        <label>Price</label>
+        <br>
+        <input type="number" name="price" placeholder="Item price" required>
+        <br>
+        <br>
+        <label>Category</label>
+        <br>
+        <select name="category_id">
+        <% categories.each do |category| %>
+            <option value=<%= category.id %>><%= category.name %></option>
+        <% end %>
+        </select>
+        <br>
+        <br>
+        <input type="submit" value="Create">
+    </form>
+    <a href="/items/back">
+                        <button>Gajadi Create</button>
+    </a>
+</body>
