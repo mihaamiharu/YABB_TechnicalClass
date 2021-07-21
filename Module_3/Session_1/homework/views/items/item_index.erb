@@ -1,0 +1,41 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<body>
+    <h1>Items</h1> 
+    <a class="btn btn-success" href="/items/new">New Item</a>
+    <br>
+    <br>
+    <table class ="table">
+        <thead>
+            <th>No</th>
+            <th>Name</th>
+
+            <th>Price</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+        <% items.each do |item| %>
+            <tr>
+                <td><%= item.id %></td>
+                <td><%= item.name %></td>
+                <td><%= item.price %></td>
+                <td><%= item.category.name %></td>
+                <td>
+                    <a href="/items/<%= "#{item.id}" %>/show">
+                        <button class="btn btn-primary">Show</button>
+                    </a>
+                    <a href="/items/<%= "#{item.id}" %>/edit">
+                        <button class="btn btn-warning">Edit</button>
+                    </a>
+                    <form action="/items/<%= "#{item.id}" %>/destroy" method="POST">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input class="btn btn-danger" type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+        <% end %>
+        </tbody>
+        
+    </table>
+
+</body>
