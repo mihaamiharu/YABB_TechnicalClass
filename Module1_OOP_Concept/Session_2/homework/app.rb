@@ -5,17 +5,17 @@ require_relative 'mongol_swordsman'
 require_relative 'person'
 require_relative 'villain'
 
+
+
 #Add 1 new var for can controlled or not
 jin = Hero.new("Jin Sakai", 100, 50, true)
 yuna = Hero.new("Yuna", 90, 45, false)
 ishikawa = Hero.new("Sensei Ishikawa", 80, 60, false)
-
+allies = [jin, yuna, ishikawa]
 
 mongol_archer = MongolArcher.new("Mongol Archer", 80, 40)
 mongol_spearman = MongolSpearman.new("Mongol Spearman", 120, 60)
 mongol_swordsman = MongolSwordsman.new("Mongol Swordsman", 100, 50)
-
-allies = [jin, yuna, ishikawa]
 villains = [mongol_archer, mongol_spearman, mongol_swordsman]
 
 i = 1 #Turn Counter
@@ -47,19 +47,21 @@ until (jin.die? || villains.empty?) do
         villains.each do |villain|
             villains.delete(villain) if villain.die? || villain.flee?
         end
+  
     end
     puts "\n"
 
     villains.each do |villain|
-        villain.attack(allies[rand(allies.size)])
+        villain.attack(allies[rand(allies.size)]) if !allies.empty?
         allies.each do |ally|
-            allies.delete(ally) if ally.die?
+            if ally.die?
+            allies.delete(ally) 
+            end
         end
     end
     puts "\n"
 
     i += 1
-
 end
 
 

@@ -1,5 +1,5 @@
 class Person
-	attr_reader :name
+	attr_reader :name, :hitpoint, :attack_damage
 	
 	def initialize(name, hitpoint, attack_damage)
 		@name = name
@@ -8,7 +8,11 @@ class Person
 	end
 	
 	def to_s
-	"#{@name} has #{@hitpoint} hitpoint and #{@attack_damage} attack damage"
+	"#{@name}"
+	end
+
+	def print_stats
+		puts "#{@name} has #{@hitpoint} hitpoint and #{@attack_damage} attack damage"
 	end
 	
 	def attack(other_player)
@@ -17,14 +21,28 @@ class Person
 	end
 	
 	def take_damage(damage)
-		@hitpoint -= damage
+		if @hitpoint <= 0 
+			die
+		else
+			@hitpoint -= damage
+		end
+	end
+
+	def take_healing(heal_amount)
+		@hitpoint += heal_amount
 	end
 	
-	def die?
-		if @hitpoint <= 0
+	def die
 		puts "#{@name} has died"
-		return true
-		end
+		@alive = false
+	end
+
+	def die?
+		!@alive
+	end
+
+	def removed?
+		die?
 	end
 	
 end

@@ -8,18 +8,23 @@ class Villain < Person
     end
 
     def take_damage(damage)
-        @hitpoint -= damage
-        if @hitpoint <= 50
+        super(damage)
+        if @hitpoint <= 50 && !die?
             flee if rand < @flee_percentage
         end
     end
 
     def flee
-        @fled = true
         puts "#{@name} has fled the battlefield with #{@hitpoint} hitpoint left"
+        @fled = true
     end
 
     def flee?
         @fled
     end
+
+    def removed?
+        die? || flee?
+    end
+
 end

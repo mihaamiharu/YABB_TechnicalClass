@@ -3,7 +3,7 @@ require_relative 'person'
 class Hero < Person
     attr_reader :controlled_character
 
-    def initialize(name, hitpoint, attack_damage, controlled_character)
+    def initialize(name, hitpoint, attack_damage)
         super(name, hitpoint, attack_damage)
         @block_chance = 0.8
         @controlled_character = controlled_character
@@ -12,13 +12,22 @@ class Hero < Person
 
     def take_damage(damage)
         if rand < @block_chance
-            puts "#{@name} deflects the attack."
+            deflect
         else 
-            @hitpoint -= damage
+            super(damage)
         end
     end
 
-    def jin_choices(villains, allies)
+    def deflect
+        puts "#{@name} deflects the attack"
+    end
+
+    def heal(other_hero)
+        other_hero.take_healing(@heal_amount)
+    end
+
+
+    =begin def jin_choices(villains, allies)
         puts "As #{name}, what do you want to do this turn?"
         puts "1. Attack an enemy"
         puts "2. Heal an ally"
@@ -26,8 +35,8 @@ class Hero < Person
         puts "\n"
 
         #Do as jin choice
-        if jin_choose == 1
-            jin_attack(villains)
+        if jin_choose == 1 
+            jin_attack(villains) if !villains.empty?
         elsif jin_choose == 2 
             jin_heal(allies)
         else
@@ -77,7 +86,7 @@ class Hero < Person
     def heals (other_player)
         puts "#{@name} heals #{@other_player}, restoring #{@heal_amount} hitpoints"
         other_player.heal
-    end
+    end =end
 
     
 end
