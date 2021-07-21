@@ -1,6 +1,6 @@
 require "mysql2"
-require_relative "models/category"
-require_relative "models/item"
+require "./models/category"
+require "./models/item"
 
 def create_db_client
     client = Mysql2::Client.new(
