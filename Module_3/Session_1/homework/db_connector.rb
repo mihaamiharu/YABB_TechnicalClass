@@ -53,20 +53,46 @@ end
 
 def create_item(name, price, category_id)
     client = create_db_client
-    client.query("INSERT INTO items(name, price) VALUES('#{name}', #{price})")
-
-    item_id = client.last_id
-    client.query("INSERT INTO item_categories(item_id, category_id) VALUES(#{item_id}, #{category_id})")
+    client.query("begin")
+    begin
+    item_insert = "INSERT INTO items(name, price) VALUES('#{name}', #{price})"
+    client.query(item_insert)
+    itemCategories_insert = "INSERT INTO item_categories(item_id, category_id) VALUES(#{client.last_id}, #{category_id})"
+    client.query(itemCategories_insert)
+    rescue Exception => e
+    puts e #Print SQL Error
+    client.query("rollback")
+    end
+    client.query("commit")
+    client.close
 end
 
 def update_item(id, name, price, category_id)
     client = create_db_client
+    client.query("begin")
+    begin
     client.query("UPDATE items SET name = '#{name}', price = #{price} WHERE id = #{id}")
     client.query("UPDATE item_categories SET category_id = #{category_id} WHERE item_id = #{id}")
+    rescue Exception => e
+    puts e 
+    client.query("rollback")
+    end
+
+    client.query("commit")
+    client.close
 end
 
 def delete_item(id)
     client = create_db_client
+    client.query("begin")
+    begin
     client.query("DELETE FROM item_categories WHERE item_id = #{id}")
     client.query("DELETE FROM items WHERE id = #{id}")
+    rescue Exception => e
+        puts e
+        client.query("rollback")
+    end
+
+    client.query("rollback")
+    client.close
 end

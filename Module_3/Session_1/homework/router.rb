@@ -1,5 +1,5 @@
 require "sinatra"
-require_relative "db_connector"
+require "./db_connector"
 
 
 get "/" do
@@ -24,8 +24,8 @@ get "/items/:id/show" do
 end
 
 get "/items/:id/edit" do
-    item = get_item(params[:id])
-    categories = get_categories
+    item = display_item(params[:id])
+    categories = display_categories
     erb :'items/item_edit', locals: {
         item: item,
         categories: categories
