@@ -1,0 +1,25 @@
+<body>
+    <h1>Edit Item</h1>
+    <form action="/items/<%= "#{params[:id]}" %>" method="POST">
+        <input type="hidden" name="_method" value="PUT">
+        <label>Name</label>
+        <br>
+        <input type="text" name="name" placeholder="Item name" value="<%= @item.name %>" required>
+        <br>
+        <br>
+        <label>Price</label>
+        <br>
+        <input type="number" name="price" placeholder="Item price" value=<%= @item.price %> required>
+        <br>
+        <br>
+        <label>Categories</label>
+        <br>
+        <% @categories.each do |category| %>
+            <input type="checkbox" name="category_ids[]" value="<%= category.id %>" <%= "checked" if @item_category_ids.include?(category.id) %>>
+            <label><%= category.name %></label>
+            <br>
+        <% end %>
+        <br>
+        <input type="submit" value="Edit">
+    </form>
+</body>

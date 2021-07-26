@@ -1,0 +1,33 @@
+<body>
+    <h1>Category Items</h1>
+    <a href="/items/new">New Item</a>
+    <table>
+        <thead>
+            <th>#</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+        <% @category_items.each do |category_item| %>
+            <tr>
+                <td><%= category_item.id %></td>
+                <td><%= category_item.name %></td>
+                <td><%= category_item.price %></td>
+                <td>
+                    <a href="/items/<%= "#{category_item.id}" %>">
+                        <button>Show</button>
+                    </a>
+                    <a href="/items/<%= "#{category_item.id}" %>/edit">
+                        <button>Edit</button>
+                    </a>
+                    <form action="/items/<%= "#{category_item.id}" %>" method="POST">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="submit" value="Delete">
+                    </form>
+                </td>
+            </tr>
+        <% end %>
+        </tbody>
+    </table>
+</body>
