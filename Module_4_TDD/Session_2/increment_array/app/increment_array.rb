@@ -19,5 +19,18 @@ class IntegerArrayIncrement
             p result
         end
 
+        # The result is same as above
+        # integer_array[-1] = integer_array.last + 1
+        # if integer_array.last == 10 && integer_array.one?
+        #     [1, 0]
+        # elsif integer_array.last == 10
+        #     integer_array[-1] = 0
+        #     integer_array[-2] += 1
+        #     integer_array
+        # else
+        #     integer_array
+        # end
     end
+
+    
 end
