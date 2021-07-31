@@ -31,6 +31,12 @@ class Item
         sql_parser(sql)
     end
 
+    def self.show_item(param)
+        client = create_db_client
+        sql = client.query("SELECT * FROM items WHERE id = '#{param}'")
+        sql_parser(sql)
+    end
+
     def update_item(category_id)
         client = create_db_client
         client.query("UPDATE items, item_categories SET items.name = '#{@name}', items.price = #{@price}, item_categories.category_id = #{category_id} WHERE items.id = #{@id} AND item_categories.item_id = #{@id}")
@@ -48,17 +54,15 @@ class Item
     end
 
     def self.sql_parser(params)
+        if params == nil
+            nil
+        else
         items = []
         params.each do |data|
             item = Item.new(data.transform_keys(&:to_sym))  #hash transform key
             items << item
         end
-        items 
+            items 
+        end
     end
-
-
-
-
-
-    
 end

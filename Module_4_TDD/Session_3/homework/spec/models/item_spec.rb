@@ -36,7 +36,7 @@ describe Item do
     end
 
     describe '#select' do
-      context 'when select all items' do
+      context 'when result is found' do
         it 'should return all items' do
           item = Item.new({
             id: nil,
@@ -59,31 +59,52 @@ describe Item do
           Item::show_items
         end
       end
+      it 'should return item with selected id' do
+        item = Item.new({
+          id: 1,
+          name: nil,
+          price: nil
+        })
 
-      context 'when select one item' do
-        it 'should return item with selected id' do
-          item = Item.new({
-            id: 1,
-            name: nil,
-            price: nil
-          })
+        sql = "SELECT items.id, items.name, items.price, categories.name FROM items JOIN item_categories ON items.id = item_categories,item_id JOIN categories ON item_categories.category_id = categories.id WHERE items.id = #{item.id} LIMIT 1"
 
-          sql = "SELECT items.id, items.name, items.price, categories.name FROM items JOIN item_categories ON items.id = item_categories,item_id JOIN categories ON item_categories.category_id = categories.id WHERE items.id = #{item.id} LIMIT 1"
+        expected_result = [{
+          "id" => item.id,
+          "name" => item.name,
+          "price" => item.price
+        }]
 
-          expected_result = [{
-            "id" => item.id,
-            "name" => item.name,
-            "price" => item.price
-          }]
+        mock_db = double
+        allow(Mysql2::Client).to receive(:new).and_return(mock_db)
+        expect(mock_db).to receive(:query).with(sql).and_return(expected_result)
+
+        Item::show_itemCategory(1)
+      end
+
+      context 'when result is not found' do
+        it 'should return nil' do
+        
+          sql = "SELECT * FROM items"
 
           mock_db = double
           allow(Mysql2::Client).to receive(:new).and_return(mock_db)
-          expect(mock_db).to receive(:query).with(sql).and_return(expected_result)
+          expect(mock_db).to receive(:query).with(sql)
+          Item::show_items
+        end
 
-          Item::show_itemCategory(1)
+        it 'should return nil if id is nil' do
+
+          id = 1
+          sql = "SELECT * FROM items WHERE id = '#{id}'"
+          mock_db = double
+          allow(Mysql2::Client).to receive(:new).and_return(mock_db)
+          expect(mock_db).to receive(:query).with(sql).and_return(nil)
+
+          
+          expect(nil). to eq(Item::show_item(id))
         end
       end
-    end
+  end
 
     describe '#save' do
       context 'when insert an item' do
