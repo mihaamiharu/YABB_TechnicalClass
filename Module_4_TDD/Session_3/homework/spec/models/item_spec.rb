@@ -56,7 +56,7 @@ describe Item do
           allow(Mysql2::Client).to receive(:new).and_return(mock_db)
           expect(mock_db).to receive(:query).with(sql).and_return(expected_result)
 
-          Item.show_items
+          Item::show_items
         end
       end
 
@@ -80,7 +80,26 @@ describe Item do
           allow(Mysql2::Client).to receive(:new).and_return(mock_db)
           expect(mock_db).to receive(:query).with(sql).and_return(expected_result)
 
-          Item.show_itemCategory(1)
+          Item::show_itemCategory(1)
+        end
+      end
+    end
+
+    describe '#save' do
+      context 'when insert an item' do
+        it 'should return new item value' do
+          item = Item.new({
+            id: nil,
+            name: 'Jellopy',
+            price: 15000
+          })
+
+          sql = "INSERT INTO items (name, price) VALUES ('#{item.name}', #{item.price})"
+          mock_db = double
+          allow(Mysql2::Client).to receive(:new).and_return(mock_db)
+          expect(mock_db).to receive(:query).with(sql)
+
+          item::save
         end
       end
     end

@@ -20,7 +20,7 @@ class Item
     end
 
     def valid?
-        return false if name.nil? || price.nil? #i dont return id because it's already auto increment
+        return false if @name.nil? || @price.nil? #i dont return id because it's already auto increment
 
         true
     end
