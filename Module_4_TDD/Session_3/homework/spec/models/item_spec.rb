@@ -105,7 +105,7 @@ describe Item do
     end
 
     describe '#update' do
-      context 'when edit an item' 
+      context 'when edit an item' do
         it 'should return the old value to the new value' do
           item = Item.new({
             id: 1,
@@ -119,6 +119,26 @@ describe Item do
           expect(mock_db).to receive(:query).with(sql)
 
           item::update_item(1)
+       end
+      end
+    end
+
+    describe '#delete' do
+      context 'when delete an item' do
+        it 'should delete one item from items' do
+        item = Item.new({
+          id: 1,
+          name: nil,
+          price: nil
+        })
+
+        sql = "DELETE FROM items WHERE id = #{item.id}"
+        mock_db = double
+        allow(Mysql2::Client).to receive(:new).and_return(mock_db)
+        expect(mock_db).to receive(:query).with(sql)
+
+        item::delete_item
+       end
       end
     end
   end
