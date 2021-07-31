@@ -15,5 +15,12 @@ describe WhoLikesIt do
         expect(wli.likes).to eq("Tata likes this")
     end
 
+    it "two people like this" do
+        wli = WhoLikesIt.new
+        wli.names = ["Tata", "Titi"]
+        p wli.likes #p stands for puts
+        expect(wli.likes).to eq("Tata and Titi like this")
+    end
+
 
 end
