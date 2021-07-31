@@ -103,5 +103,23 @@ describe Item do
         end
       end
     end
+
+    describe '#update' do
+      context 'when edit an item' 
+        it 'should return the old value to the new value' do
+          item = Item.new({
+            id: 1,
+            name: 'Jellopy',
+            price: 15000
+          })
+
+          sql = "UPDATE items, item_categories SET items.name = '#{item.name}', items.price = #{item.price}, item_categories.category_id = #{1} WHERE items.id = #{item.id} AND item_categories.item_id = #{item.id}"
+          mock_db = double
+          allow(Mysql2::Client).to receive(:new).and_return(mock_db)
+          expect(mock_db).to receive(:query).with(sql)
+
+          item::update_item(1)
+      end
+    end
   end
 end

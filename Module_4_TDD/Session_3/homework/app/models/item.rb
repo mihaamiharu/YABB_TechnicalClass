@@ -31,6 +31,11 @@ class Item
         sql_parser(sql)
     end
 
+    def update_item(category_id)
+        client = create_db_client
+        client.query("UPDATE items, item_categories SET items.name = '#{@name}', items.price = #{@price}, item_categories.category_id = #{category_id} WHERE items.id = #{@id} AND item_categories.item_id = #{@id}")
+    end
+
     def self.show_itemCategory(params)
         client = create_db_client
         sql = client.query("SELECT items.id, items.name, items.price, categories.name FROM items JOIN item_categories ON items.id = item_categories,item_id JOIN categories ON item_categories.category_id = categories.id WHERE items.id = #{params} LIMIT 1" )
