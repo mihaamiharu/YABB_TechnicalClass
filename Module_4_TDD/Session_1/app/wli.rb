@@ -1,12 +1,23 @@
 class WhoLikesIt
 
+    attr_accessor :names
     def initialize
-        @name = []
+        @names = []
     end
 
     def likes
-        @name.length == 0
-        return "no one like this"
+        case @names.length 
+        when 0
+            return "no one like this"
+        when 1
+            return "#{@names[0]} likes this" 
+        when 2
+            return "#{@names[0]} and #{@names[1]} like this" 
+        when 3 
+            return "#{@names[0]},#{@names[1]} and #{names[2]} like this" 
+        when 4 
+            return "#{@names[0]},#{@names[1]} and #{@names.length - 2} others like this" 
+        end
     end
     
 end
