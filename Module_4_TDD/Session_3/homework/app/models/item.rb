@@ -1,7 +1,9 @@
-require './db/db_connection'
-require './models/categories'
+require_relative '../db/db_connection.rb'
+require_relative 'category.rb'
 
-class Items
+class Item
+
+    $client = create_db_client
     attr_accessor :id, :name, :price, :categories
 
     def initialize(params)
@@ -9,5 +11,17 @@ class Items
         @name = params[:name]
         @price = params[:price]
         @categories = []
+    end
+
+    def save
+        return false unless valid?
+        
+        $client.query("INSERT INTO items(name, price) VALUES ('#{name}', #{price})")
+    end
+
+    def valid?
+        return false if name.nil? || price.nil?
+
+        true
     end
 end
