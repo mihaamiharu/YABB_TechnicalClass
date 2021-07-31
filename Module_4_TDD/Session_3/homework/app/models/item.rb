@@ -3,7 +3,7 @@ require_relative 'category.rb'
 
 class Item
 
-    $client = create_db_client
+    
     attr_accessor :id, :name, :price, :categories
 
     def initialize(params)
@@ -15,8 +15,8 @@ class Item
 
     def save
         return false unless valid?
-        
-        $client.query("INSERT INTO items(name, price) VALUES ('#{name}', #{price})")
+        client = create_db_client
+        client.query("INSERT INTO items (name, price) VALUES ('#{name}', #{price})")
     end
 
     def valid?
