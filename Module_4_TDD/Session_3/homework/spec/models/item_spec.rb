@@ -4,64 +4,62 @@ require_relative '../../app/db/db_connection'
 describe Item do
     describe '#valid?' do
     context 'when given valid input' do
-      it 'return valid is true' do
-        params = {
+      it 'should return true if valid' do
+        item = Item.new({
           id: 1,
           name: 'Jellopy',
           price: 15000
-        }
-
-        item = Item.new(params)
+        })
 
         expect(item.valid?).to eq(true)
       end
     end
 
     context 'when given invalid input' do
-      it 'return false when name is nil' do
-        params = {
+      it 'should return false when name is nil' do
+        item = Item.new({
           id: 1,
           price: 15000
-        }
-
-        item = Item.new(params)
+        })
 
         expect(item.valid?).to be_falsey #be falsey means false
       end
 
-      it 'return false when price is nil' do
-        params = {
+      it 'should return false when price is nil' do
+        item = Item.new({
           id: 1,
           name: 'Jellopy'
-        }
-
-        item = Item.new(params)
+        })
 
         expect(item.valid?).to be_falsey #be falsey means false
       end
     end
 
-    describe '#save' do
-      context 'when given valid parameters' do
-        it 'should save item' do
-          params = {
-            name: 'Jellopy',
-            price: 15000
-          }
+    describe '#select' do
+      context 'when select all items' do
+        it 'should return all items' do
+          item = Item.new({
+            id: nil,
+            name: nil,
+            price: nil
+          })
 
-          item = Item.new(params)
+          sql = "SELECT * FROM items"
 
-          query = "INSERT INTO items (name, price) VALUES ('#{item.name}', #{item.price})"
+          expected_result = [{
+            "id" => item.id,
+            "name" => item.name,
+            "price" => item.price
+          }]
 
           mock_db = double
           allow(Mysql2::Client).to receive(:new).and_return(mock_db)
-          expect(mock_db).to receive(:query).with(query)
+          expect(mock_db).to receive(:query).with(sql).and_return(expected_result)
 
-          item.save
+          Item.show_items
         end
       end
     end
 
   end
-
 end
