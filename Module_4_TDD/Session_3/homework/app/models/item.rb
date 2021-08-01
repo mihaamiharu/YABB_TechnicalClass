@@ -60,7 +60,7 @@ class Item
         items = []
         params.each do |data|
             item = Item.new(data.transform_keys(&:to_sym))  #hash transform key
-            items << item
+            items << item 
         end
             items 
         end
