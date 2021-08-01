@@ -13,5 +13,16 @@ describe Category do
                 expect(categories.valid?).to eq(true)
             end
         end
+
+        context 'when given invalid input' do
+            it 'should return false when name is nil' do
+                categories = Category.new({
+                    id: 1,
+                    name: nil
+                })
+      
+              expect(categories.valid?).to be_falsey #be falsey means false
+            end
+        end
     end
 end
